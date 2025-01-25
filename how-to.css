@@ -1,6 +1,6 @@
 body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       background: linear-gradient(to right,rgba(0, 128, 128, 0.733),rgba(220, 20, 60, 0.384));
       color: #d6d4d4;
       display: flex;
@@ -27,18 +27,14 @@ body {
     }
 
     span{
-        /* margin-bottom: 5px; */
-        text-decoration: underline;
         font-weight: bolder;
     }
 
     p {
-      font-size: 1rem;
       margin: 15px 0;
     }
 
     ul {
-      list-style: disc;
       padding-left: 20px;
       text-align: left;
     }
