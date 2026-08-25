@@ -3,38 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How to Play - Rock, Paper, Scissors</title>
+  <title>How to Play — Rock Paper Scissors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="how-to.css">
 </head>
 <body>
-  <div class="container">
-    <h1>How to Play Rock, Paper, Scissors</h1>
-    <p>Welcome! Here’s a simple guide to help you understand and enjoy the game:</p>
-    <ul>
-      <p><span>Objective:</span> <ul>
-          <li>The goal is to score 5 points before the computer does.</li>
-      </ul></p>
-      <p><span>How to Play:</span></p> 
-        <ul>
-          <li>Click on 👊 to choose "Rock, ✋ to choose" "Paper," or ✌ to choose "Scissors".</li>
-          <li>The computer will make its choice randomly or strategically (depending on the level).</li>
-          <li>Rock beats Scissors, Scissors beat Paper, and Paper beats Rock.</li>
-        </ul>
-      <p><span>Levels:</span></p>
-        <ul>
-          <li>Level 1: Simple randomness - anyone can win!</li>
-          <li>Level 2: More challenging with smarter computer choices based on your gameplay.</li>
-        </ul>
-    
-      <p><span>Winning a Round:</span> <ul>
-          <li>Reach 5 points first to win a round.</li>
-      </ul></p>
-      <p><span>Play Again:</span> <ul>
-          <li>After a round, click "Play Again" to start fresh.</li>
-      </ul></p>
-    </ul>
-    <p>Ready to test your skills? Click below to head back to the game!</p>
-    <button onclick="window.location.href='index.html'">Back to Game</button>
+
+  <div class="bg-arena">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
   </div>
+
+  <main class="container">
+    <h1 class="title">HOW TO<br><span>PLAY</span></h1>
+
+    <div class="rules">
+      <div class="rule-card">
+        <span class="rule-icon">🎯</span>
+        <p class="rule-text">Tap a card — <strong>Rock 🪨</strong>, <strong>Paper 📄</strong>, or <strong>Scissors ✂️</strong> — to make your pick</p>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">⚔️</span>
+        <p class="rule-text">The CPU picks instantly. <strong>Rock beats Scissors, Scissors beat Paper, Paper beats Rock.</strong></p>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🏆</span>
+        <p class="rule-text">First to <strong>5 points</strong> wins the round. Win <strong>5 rounds</strong> to unlock Level 2</p>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🤖</span>
+        <p class="rule-text"><strong>Level 2</strong> — The CPU reads your pattern and counters you 70% of the time</p>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">📊</span>
+        <p class="rule-text">Your matches & wins are tracked and saved while the tab stays open</p>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-btn">← BACK TO ARENA</a>
+  </main>
+
 </body>
 </html>

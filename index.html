@@ -1,37 +1,85 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock-Paper-Scissors</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Rock Paper Scissors</h1>
-    <div class="info">
-        
-        <div class="scoreDisplay">
-            <p id="playerScore">Player: 0</p>
-            <p id="computerScore">Computer: 0</p></div>
-        <div class="scoreDisplay">
-                <p id="trialsDisplay">Trials: 0</p>
-                <p id="winsDisplay">No of Wins: 0</p>
-        </div>
+
+  <!-- Floating background elements -->
+  <div class="bg-arena">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <main class="arena">
+
+    <!-- Title -->
+    <h1 class="title">ROCK<br><span class="title-sub">PAPER</span><br>SCISSORS</h1>
+
+    <!-- Scoreboard -->
+    <div class="scoreboard">
+      <div class="score-card score-player">
+        <span class="score-label">YOU</span>
+        <span class="score-num" id="playerScore">0</span>
+      </div>
+      <div class="score-card score-computer">
+        <span class="score-label">CPU</span>
+        <span class="score-num" id="computerScore">0</span>
+      </div>
     </div>
-       
+
+    <!-- Stats row -->
+    <div class="stats-row">
+      <span id="trialsDisplay">Matches: 0</span>
+      <span id="winsDisplay">Wins: 0</span>
+    </div>
+
+    <!-- VS Display -->
+    <div class="vs-display">
+      <div class="choice-slot" id="playerChoice">
+        <span class="slot-label">YOU PICKED</span>
+        <span class="slot-emoji" id="playerEmoji">❓</span>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="choice-slot" id="computerChoice">
+        <span class="slot-label">CPU PICKED</span>
+        <span class="slot-emoji" id="computerEmoji">❓</span>
+      </div>
+    </div>
+
+    <!-- Result banner -->
+    <div class="result-banner" id="resultBanner">
+      <span id="resultDisplay"></span>
+    </div>
+
+    <p class="final-result" id="finalResultDisplay"></p>
+
+    <!-- Choice buttons -->
     <div class="choices">
-        <p onclick="playGame('Rock')" id="rock">👊</p>
-        <p onclick="playGame('Paper')" id="paper">✋</p>
-        <p onclick="playGame('Scissors')" id="scissors">✌</p>
+      <button class="choice-btn" data-choice="Rock">
+        <span class="btn-emoji">🪨</span>
+        <span class="btn-label">Rock</span>
+      </button>
+      <button class="choice-btn" data-choice="Paper">
+        <span class="btn-emoji">📄</span>
+        <span class="btn-label">Paper</span>
+      </button>
+      <button class="choice-btn" data-choice="Scissors">
+        <span class="btn-emoji">✂️</span>
+        <span class="btn-label">Scissors</span>
+      </button>
     </div>
-    <div class="choiceDisplay">
-        <p id="playerChoice">Player:  </p>
-        <p id="computerChoice">Computer: </p>
-    </div>
-    <p id="resultDisplay"></p>
-    <p id="finalResultDisplay"></p>
-    <button id="replayBtn">Next Round</button>
-    
-    <script src="index.js"></script>
+
+    <!-- Replay button -->
+    <button class="replay-btn" id="replayBtn">Next Round</button>
+
+  </main>
+
+  <script src="index.js"></script>
 </body>
 </html>

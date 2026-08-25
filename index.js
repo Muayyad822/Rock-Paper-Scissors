@@ -1,231 +1,124 @@
-// let playerScoreDisplay = document.querySelector("#playerScore");
-// let computerScoreDisplay = document.querySelector("#computerScore");
-// let playerChoiceDisplay = document.querySelector("#playerChoice");
-// let computerChoiceDisplay = document.querySelector("#computerChoice");
-// let resultDisplay = document.querySelector("#resultDisplay"); 
-
-// let choices = ["Rock", "Paper", "Scissors"];
-// let trialsDisplay = document.querySelector("#trialsDisplay")
-// let winsDisplay = document.querySelector("#winsDisplay")
-// let playerScore = 0;
-// let computerScore = 0;
-// let trials = 0;
-// let wins = sessionStorage.getItem("wins") ? parseInt(sessionStorage.getItem("wins")) : 0;
-
-
-// function playGame(playerChoice){
-//     let computerChoice = choices[Math.floor(Math.random() * 3)];
-//     let result = " "
-//     let finalResultDisplay = document.querySelector("#finalResultDisplay");
-//     let replayBtn = document.querySelector('#replayBtn');
-    
-//     winsDisplay.textContent = `Wins: ${wins}`
-
-//     if (playerChoice === computerChoice) {
-//         result = "IT'S A TIE"
-//     } else{
-//         switch (playerChoice) {
-//             case "Rock":
-//                 result = (computerChoice === "Scissors") ? "YOU WIN" : "YOU LOSE"
-//                 break;
-//             case "Paper":
-//                 result = (computerChoice === "Rock") ? "YOU WIN" : "YOU LOSE"
-//                 break;
-//             case "Scissors":
-//                 result =  (computerChoice === "Paper") ? "YOU WIN" : "YOU LOSE"
-//                 break;
-        
-//             default:
-//                 break;
-//         }
-        
-//     } 
-
-//     playerChoiceDisplay.textContent = `Player: ${playerChoice}`
-//     computerChoiceDisplay.textContent = `Computer: ${computerChoice}`
-//     resultDisplay.textContent = result;
-//     resultDisplay.classList.remove("greenText", "redText")
-//     switch (result) {
-//         case "YOU WIN":
-//             resultDisplay.classList.add("greenText")
-//             playerScore++
-//             playerScoreDisplay.textContent = `Player: ${playerScore}`
-            
-//             break;
-//         case "YOU LOSE":
-//            resultDisplay.classList.add("redText")
-//             computerScore++
-//             computerScoreDisplay.textContent = `Computer: ${computerScore}`
-//             break;
-    
-//         default:
-//             break;
-//     }
-
-//     if (playerScore === 5) {
-//         finalResultDisplay.textContent = "You Won This Round"
-//         playerScore = 0;
-//         computerScore = 0;
-//         replayBtn.style.display = "block"
-//         wins++;
-//         sessionStorage.setItem("wins", wins);
-//         winsDisplay.textContent = `Wins: ${wins}`
-//     } else if (computerScore === 5){
-//         finalResultDisplay.textContent = "You Lost This Round"
-//         playerScore = 0;
-//         computerScore = 0;
-//         replayBtn.style.display = "block"
-        
-//     } 
-    
-//    // Initialize trials from localStorage or set it to 0 if it doesn't exist
-// let trials = sessionStorage.getItem("trials") ? parseInt(sessionStorage.getItem("trials")) : 0;
-
-// // Display the current trials count
-// trialsDisplay.textContent = `Trials: ${trials}`;
-
-
-// replayBtn.addEventListener("click", () => {
-//     trials++;
-//     sessionStorage.setItem("trials", trials); // Update trials in localStorage
-//     trialsDisplay.textContent = `Trials: ${trials}`;
-//     window.location.reload(); // Reload the page
-// });
-
-// }
-
-
-
-
-
-
-
-// Select DOM elements for displaying scores, choices, and results
 const playerScoreDisplay = document.querySelector("#playerScore");
 const computerScoreDisplay = document.querySelector("#computerScore");
-const playerChoiceDisplay = document.querySelector("#playerChoice");
-const computerChoiceDisplay = document.querySelector("#computerChoice");
+const playerEmoji = document.querySelector("#playerEmoji");
+const computerEmoji = document.querySelector("#computerEmoji");
 const resultDisplay = document.querySelector("#resultDisplay");
+const resultBanner = document.querySelector("#resultBanner");
 const trialsDisplay = document.querySelector("#trialsDisplay");
 const winsDisplay = document.querySelector("#winsDisplay");
 const finalResultDisplay = document.querySelector("#finalResultDisplay");
 const replayBtn = document.querySelector("#replayBtn");
-const instructionsModal = document.createElement("div"); // Modal for instructions
-const choiceButtons = document.querySelectorAll(".choice-button"); // Buttons for player choices
+const playerSlot = document.querySelector("#playerChoice");
+const computerSlot = document.querySelector("#computerChoice");
 
-// Initialize game variables
+const EMOJI_MAP = {
+  Rock: "🪨",
+  Paper: "📄",
+  Scissors: "✂️",
+};
+
 const choices = ["Rock", "Paper", "Scissors"];
 let playerScore = 0;
 let computerScore = 0;
 let trials = Number(sessionStorage.getItem("trials")) || 0;
 let wins = Number(sessionStorage.getItem("wins")) || 0;
-let gameActive = true; // New variable to control game state
-let currentLevel = 1; // Track the current level
+let gameActive = true;
+let currentLevel = 1;
 
-// Display initial values
-trialsDisplay.textContent = `Trials: ${trials}`;
+trialsDisplay.textContent = `Matches: ${trials}`;
 winsDisplay.textContent = `Wins: ${wins}`;
 
-// Create and display instructions modal
-// Create and display instructions modal
+// Instructions modal
 function displayInstructions() {
-  instructionsModal.style.position = "fixed";
-  instructionsModal.style.top = "0";
-  instructionsModal.style.left = "0";
-  instructionsModal.style.width = "100vw";
-  instructionsModal.style.height = "100vh";
-  instructionsModal.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-  instructionsModal.style.color = "#fff";
-  instructionsModal.style.display = "flex";
-  instructionsModal.style.flexDirection = "column";
-  instructionsModal.style.justifyContent = "center";
-  instructionsModal.style.alignItems = "center";
-  instructionsModal.style.zIndex = "1000";
-  instructionsModal.style.padding = "20px";
-  instructionsModal.style.boxSizing = "border-box";
-  instructionsModal.style.textAlign = "center";
-
-  instructionsModal.innerHTML = `
-   <h1 style="font-size: 2rem; margin-bottom: 1rem;">Welcome to Rock, Paper, Scissors!</h1>
-    <p style="font-size: 1.2rem; margin-bottom: 1rem;">Instructions:</p>
-    <ul style="list-style: none; padding: 0; font-size: 1rem;">
-      <li style="margin-bottom: 0.5rem;">1. Click "Rock," "Paper," or "Scissors" to make your choice.</li>
-      <li style="margin-bottom: 0.5rem;">2. The computer will also make a choice.</li>
-      <li style="margin-bottom: 0.5rem;">3. Win a round by reaching 5 points before the computer.</li>
-      <li style="margin-bottom: 0.5rem;">4. Win five rounds to unlock Level 2 with smarter computer choices.</li>
-      <li style="margin-bottom: 0.5rem;">5. Click "Play Again" after a round to reset the game and start a new round.</li>
-      <li style="margin-bottom: 0.5rem;">6. Your wins and trials are tracked and saved as long as you stay in this browser.</li>
+  const modal = document.createElement("div");
+  modal.style.cssText = `
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.88);
+    color: #e8e6f0;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    z-index: 1000; padding: 24px;
+    font-family: 'Orbitron', sans-serif;
+  `;
+  modal.innerHTML = `
+    <h1 style="font-family:'Press Start 2P',monospace;font-size:1.2rem;margin-bottom:1.5rem;text-align:center;color:#ffcc00;">ROCK PAPER SCISSORS</h1>
+    <p style="font-size:0.8rem;letter-spacing:2px;color:#6a6a8a;margin-bottom:1rem;">HOW TO PLAY</p>
+    <ul style="list-style:none;padding:0;font-size:0.75rem;line-height:2.2;max-width:380px;">
+      <li>🪨 📄 ✂️ — Tap a card to choose</li>
+      <li>⚡ First to 5 wins the round</li>
+      <li>🏆 Win 5 rounds → unlock Level 2</li>
+      <li>🤖 Level 2 CPU plays smarter</li>
+      <li>📊 Matches & wins saved per session</li>
     </ul>
-    <div style="margin-top: 20px; display: flex; gap: 10px;">
-      <button id="closeInstructions" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #8b3535; color: white; border: none; border-radius: 5px; display: block;">Got It!</button>
-      <button id="howToPage" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #8b3535; color: white; border: none; border-radius: 5px; display: block;">How To Play</button>
+    <div style="margin-top:24px;display:flex;gap:12px;">
+      <button id="closeInstructions" style="font-family:'Press Start 2P',monospace;font-size:0.55rem;padding:12px 20px;cursor:pointer;background:#ffcc00;color:#0a0a1a;border:none;border-radius:10px;">LET'S GO</button>
+      <button id="howToPage" style="font-family:'Press Start 2P',monospace;font-size:0.55rem;padding:12px 20px;cursor:pointer;background:transparent;color:#6a6a8a;border:2px solid #6a6a8a;border-radius:10px;">HOW TO PLAY</button>
     </div>
   `;
+  document.body.appendChild(modal);
 
-  document.body.appendChild(instructionsModal);
-
-  // Close instructions modal
-  document.querySelector("#closeInstructions").addEventListener("click", () => {
-    instructionsModal.style.display = "none";
-  });
-
-  // Navigate to the how-to page
-  document.querySelector("#howToPage").addEventListener("click", () => {
-    window.location.href = "how-to.html"; // Replace "how-to.html" with the actual URL of your how-to page
-  });
+  document.querySelector("#closeInstructions").addEventListener("click", () => modal.remove());
+  document.querySelector("#howToPage").addEventListener("click", () => window.location.href = "how-to.html");
 }
-
 
 displayInstructions();
 
-
 function updateChoices(playerChoice, computerChoice) {
-  playerChoiceDisplay.textContent = `Player: ${playerChoice}`;
-  computerChoiceDisplay.textContent = `Computer: ${computerChoice}`;
+  playerEmoji.textContent = EMOJI_MAP[playerChoice] || "❓";
+  computerEmoji.textContent = EMOJI_MAP[computerChoice] || "❓";
+
+  playerSlot.classList.remove("winner", "loser");
+  computerSlot.classList.remove("winner", "loser");
+
+  const result = determineResult(playerChoice, computerChoice);
+  if (result === "YOU WIN") {
+    playerSlot.classList.add("winner");
+    computerSlot.classList.add("loser");
+  } else if (result === "YOU LOSE") {
+    computerSlot.classList.add("winner");
+    playerSlot.classList.add("loser");
+  }
 }
 
 function determineResult(playerChoice, computerChoice) {
   if (playerChoice === computerChoice) return "IT'S A TIE";
-
-  switch (playerChoice) {
-    case "Rock":
-      return computerChoice === "Scissors" ? "YOU WIN" : "YOU LOSE";
-    case "Paper":
-      return computerChoice === "Rock" ? "YOU WIN" : "YOU LOSE";
-    case "Scissors":
-      return computerChoice === "Paper" ? "YOU WIN" : "YOU LOSE";
-    default:
-      return "Invalid choice";
-  }
+  if (
+    (playerChoice === "Rock" && computerChoice === "Scissors") ||
+    (playerChoice === "Paper" && computerChoice === "Rock") ||
+    (playerChoice === "Scissors" && computerChoice === "Paper")
+  ) return "YOU WIN";
+  return "YOU LOSE";
 }
 
 function updateScores(result) {
-  resultDisplay.classList.remove("greenText", "redText");
+  resultBanner.classList.remove("win", "lose", "tie");
 
   if (result === "YOU WIN") {
-    resultDisplay.classList.add("greenText");
+    resultBanner.classList.add("win");
     playerScore++;
-    playerScoreDisplay.textContent = `Player: ${playerScore}`;
+    playerScoreDisplay.textContent = playerScore;
   } else if (result === "YOU LOSE") {
-    resultDisplay.classList.add("redText");
+    resultBanner.classList.add("lose");
     computerScore++;
-    computerScoreDisplay.textContent = `Computer: ${computerScore}`;
+    computerScoreDisplay.textContent = computerScore;
+  } else {
+    resultBanner.classList.add("tie");
   }
 }
 
 function checkGameEnd() {
   if (playerScore === 5) {
-    handleGameEnd("You Won This Round");
+    handleGameEnd("YOU WON THE ROUND!");
     wins++;
     sessionStorage.setItem("wins", wins);
     winsDisplay.textContent = `Wins: ${wins}`;
     if (wins === 5) {
       currentLevel++;
-      alert("Congratulations! You've advanced to Level 2.");
-      replayBtn.textContent = "Go To Level 2"
+      finalResultDisplay.textContent = "🚀 LEVEL 2 UNLOCKED!";
+      replayBtn.textContent = "LEVEL 2 →";
     }
   } else if (computerScore === 5) {
-    handleGameEnd("You Lost This Round");
+    handleGameEnd("CPU WINS THE ROUND");
   }
 }
 
@@ -234,39 +127,50 @@ function handleGameEnd(message) {
   playerScore = 0;
   computerScore = 0;
   replayBtn.style.display = "block";
-  gameActive = false; // Disable further play until replay button is clicked
+  gameActive = false;
+  setChoiceButtonsDisabled(true);
 }
 
-function setupReplayButton() {
-  replayBtn.addEventListener("click", () => {
-    trials++;
-    sessionStorage.setItem("trials", trials);
-    trialsDisplay.textContent = `Trials: ${trials}`;
-    resetGameState();
+function setChoiceButtonsDisabled(disabled) {
+  document.querySelectorAll(".choice-btn").forEach(btn => {
+    btn.classList.toggle("disabled", disabled);
   });
 }
+
+replayBtn.addEventListener("click", () => {
+  trials++;
+  sessionStorage.setItem("trials", trials);
+  trialsDisplay.textContent = `Matches: ${trials}`;
+  resetGameState();
+});
 
 function resetGameState() {
   playerScore = 0;
   computerScore = 0;
-  playerScoreDisplay.textContent = `Player: ${playerScore}`;
-  computerScoreDisplay.textContent = `Computer: ${computerScore}`;
+  playerScoreDisplay.textContent = 0;
+  computerScoreDisplay.textContent = 0;
   finalResultDisplay.textContent = "";
   resultDisplay.textContent = "";
+  resultBanner.classList.remove("win", "lose", "tie");
   replayBtn.style.display = "none";
-  gameActive = true; // Re-enable game play
+  playerEmoji.textContent = "❓";
+  computerEmoji.textContent = "❓";
+  playerSlot.classList.remove("winner", "loser");
+  computerSlot.classList.remove("winner", "loser");
+  gameActive = true;
+  setChoiceButtonsDisabled(false);
 }
 
 function playGame(playerChoice) {
-  if (!gameActive) return; // Prevent play if the game is inactive
+  if (!gameActive) return;
 
   const computerChoice =
     currentLevel === 1
-      ? choices[Math.floor(Math.random() * choices.length)]
+      ? choices[Math.floor(Math.random() * 3)]
       : getBiasedComputerChoice(playerChoice);
-  const result = determineResult(playerChoice, computerChoice);
 
   updateChoices(playerChoice, computerChoice);
+  const result = determineResult(playerChoice, computerChoice);
   resultDisplay.textContent = result;
   updateScores(result);
   checkGameEnd();
@@ -285,33 +189,6 @@ function getBiasedComputerChoice(playerChoice) {
   }
 }
 
-setupReplayButton();
-choiceButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const playerChoice = button.dataset.choice;
-    playGame(playerChoice);
-  });
+document.querySelectorAll(".choice-btn").forEach(btn => {
+  btn.addEventListener("click", () => playGame(btn.dataset.choice));
 });
-
-
-
-
-
-// /**
-//  * Generate the computer's choice based on the current level.
-//  * @param {string} playerChoice - The player's choice.
-//  * @returns {string} - The computer's choice.
-//  */
-// function getComputerChoice(playerChoice) {
-//   if (level === 1) {
-//     return choices[Math.floor(Math.random() * choices.length)];
-//   } else {
-//     // Level 2 logic: Introduce bias based on the player's choice
-//     let bias = Math.random() > 0.7 ? playerChoice : choices[Math.floor(Math.random() * choices.length)];
-//     return bias === "Rock"
-//       ? Math.random() > 0.5 ? "Paper" : "Scissors"
-//       : bias === "Paper"
-//       ? Math.random() > 0.5 ? "Scissors" : "Rock"
-//       : Math.random() > 0.5 ? "Rock" : "Paper";
-//   }
-// }
