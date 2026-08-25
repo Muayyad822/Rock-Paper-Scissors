@@ -1,71 +1,168 @@
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-dark: #0a0a1a;
+  --bg-card: #12122a;
+  --accent-1: #ff2d55;
+  --accent-2: #00d4ff;
+  --accent-3: #ffcc00;
+  --text: #e8e6f0;
+  --muted: #6a6a8a;
+}
+
 body {
-      margin: 0;
-      font-family: sans-serif;
-      background: linear-gradient(to right,rgba(0, 128, 128, 0.733),rgba(220, 20, 60, 0.384));
-      color: #d6d4d4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-dark);
+  color: var(--text);
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
 
-    .container {
-      max-width: 600px;
-      background-color: #8b3535c2;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
+/* ── Background orbs ── */
+.bg-arena {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: white;
-    }
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.2;
+  animation: float 8s ease-in-out infinite;
+}
 
-    span{
-        font-weight: bolder;
-    }
+.orb-1 {
+  width: 350px;
+  height: 350px;
+  background: var(--accent-1);
+  top: -80px;
+  right: -80px;
+}
 
-    p {
-      margin: 15px 0;
-    }
+.orb-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent-2);
+  bottom: -60px;
+  left: -60px;
+  animation-delay: -4s;
+}
 
-    ul {
-      padding-left: 20px;
-      text-align: left;
-    }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -20px); }
+}
 
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      color: #fff;
-      background-color: #8b3535;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+/* ── Container ── */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  width: 100%;
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
 
-    button:hover {
-      background-color: #8b3535c2;
-      transform: scale(1.5);
-    }
+.title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.4rem;
+  text-align: center;
+  line-height: 2;
+  color: var(--text);
+  text-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+}
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.8rem;
-      }
+.title span {
+  color: var(--accent-3);
+}
 
-      p, ul {
-        font-size: 0.95rem;
-      }
+/* ── Rules ── */
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
 
-      button {
-        font-size: 0.9rem;
-      }
-    }
+.rule-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: border-color 0.3s;
+}
+
+.rule-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.rule-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.rule-text {
+  font-size: 0.7rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.rule-text strong {
+  color: var(--text);
+}
+
+/* ── Back button ── */
+.back-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 14px 32px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: var(--bg-dark);
+  background: var(--accent-3);
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.back-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 30px rgba(255, 204, 0, 0.4);
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .title {
+    font-size: 1rem;
+  }
+
+  .rule-card {
+    padding: 12px 14px;
+  }
+
+  .rule-text {
+    font-size: 0.65rem;
+  }
+}
