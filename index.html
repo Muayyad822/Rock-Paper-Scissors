@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Rock Paper Scissors</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <!-- Particle canvas -->
+  <canvas id="particles"></canvas>
 
   <!-- Floating background elements -->
   <div class="bg-arena">
@@ -16,10 +19,37 @@
     <div class="orb orb-3"></div>
   </div>
 
+  <!-- Pause overlay -->
+  <div class="pause-overlay" id="pauseOverlay">
+    <div class="pause-content">
+      <div class="pause-icon">⏸️</div>
+      <h2 class="pause-title">PAUSED</h2>
+      <div class="pause-actions">
+        <button class="pause-btn pause-resume" id="pauseResume">▶ RESUME</button>
+        <button class="pause-btn pause-restart" id="pauseRestart">🔄 RESTART</button>
+        <button class="pause-btn pause-menu" id="pauseMenu">📋 HOW TO PLAY</button>
+        <button class="pause-btn pause-sound" id="pauseSound">🔊 SOUND</button>
+      </div>
+    </div>
+  </div>
+
   <main class="arena">
 
     <!-- Title -->
     <h1 class="title">ROCK<br><span class="title-sub">PAPER</span><br>SCISSORS</h1>
+
+    <!-- Menu bar -->
+    <div class="menu-bar">
+      <div class="menu-left">
+        <div class="streak-box" id="streakBox">
+          <span class="streak-fire" id="streakFire">🔥</span>
+          <span class="streak-num" id="streakNum">0</span>
+        </div>
+      </div>
+      <div class="menu-right">
+        <button class="menu-btn" id="pauseBtn" title="Pause">⏸️</button>
+      </div>
+    </div>
 
     <!-- Scoreboard -->
     <div class="scoreboard">
@@ -40,7 +70,7 @@
     </div>
 
     <!-- VS Display -->
-    <div class="vs-display">
+    <div class="vs-display" id="vsDisplay">
       <div class="choice-slot" id="playerChoice">
         <span class="slot-label">YOU PICKED</span>
         <span class="slot-emoji" id="playerEmoji">❓</span>
